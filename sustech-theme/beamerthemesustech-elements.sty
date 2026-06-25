@@ -1,0 +1,72 @@
+% beamerthemesustech-elements.sty
+% Theme author: Haobo Yang · github.com/yhbcode000 · yhbcode000@foxmail.com
+% 可复用排版宏与环境（基于标准 beamer 构件，键入 SUSTech 学术配色）。
+% 由 beamerthemesustech.sty 在加载 color 主题之后引入，故可直接使用
+% sustechorange / sustechblue / sustechgold / sustechink 等颜色。
+\ProvidesPackage{beamerthemesustech-elements}[2026/06/25 SUSTech themed elements (Madrid-based)]
+
+\RequirePackage{graphicx}
+\RequirePackage{booktabs}
+\RequirePackage{colortbl}
+\RequirePackage{amsmath}
+
+% --- 文字配色别名（强调=橙 / 关键词=橙 / 表头=主蓝）---------------------------
+\colorlet{emph}{sustechorange}
+\colorlet{kw}{sustechorange}
+\colorlet{hdr}{sustechblue}
+
+% --- 强调 / 高亮 -------------------------------------------------------------
+\newcommand{\shl}[1]{\textbf{\textcolor{emph}{#1}}}        % 强调（橙、粗）
+\newcommand{\keyword}[1]{\textbf{\textcolor{kw}{#1}}}      % 关键词（橙、粗）
+\newcommand{\brandemph}[1]{\textit{\textcolor{emph}{#1}}}  % 品牌强调（橙、斜）
+\newcommand{\hlbox}[1]{\colorbox{sustechgold!45}{#1}}      % 金黄底高亮（重要数字）
+
+% --- 图与图注 ----------------------------------------------------------------
+% \fitfigure{file}：限宽限高、保持比例，避免溢出
+\newcommand{\fitfigure}[1]{\includegraphics[width=\linewidth,height=0.45\textheight,keepaspectratio]{#1}}
+% 图注前缀（默认“图”，可用 \setfigureprefix 改为 Figure 等）
+\newcommand{\figureprefix}{图}
+\newcommand{\setfigureprefix}[1]{\renewcommand{\figureprefix}{#1}}
+% \figcap{n}{文字} -> “图 n: 文字”；前缀与编号不拆行
+\newcommand{\figcap}[2]{{\footnotesize\color{sustechgrey}\mbox{\figureprefix~#1:}~#2}}
+
+% --- 指标大数字 --------------------------------------------------------------
+% \metric{100\%}{成功率}
+\newcommand{\metric}[2]{%
+  \begin{minipage}[t]{0.30\textwidth}\centering
+    {\fontsize{22}{24}\selectfont\textbf{\textcolor{emph}{#1}}}\\[0.2em]
+    {\small\color{sustechgrey}#2}
+  \end{minipage}}
+
+% --- 要点框 callout（橙色 alertblock）----------------------------------------
+\newenvironment{callout}[1][要点]{\begin{alertblock}{#1}}{\end{alertblock}}
+
+% --- 表格辅助 ----------------------------------------------------------------
+\newcommand{\theadrow}{\rowcolor{hdr}}     % 表头底色行（主蓝）
+\newcommand{\altrow}{\rowcolor{cardgrey}}  % 隔行浅灰
+\newcommand{\thc}[1]{{\color{white}\bfseries #1}}
+
+% --- 间距节律 ----------------------------------------------------------------
+\newcommand{\tightgap}{\vspace{0.18em}}
+\newcommand{\deckgap}{\vspace{0.45em}}
+
+% --- 分区宽度 ----------------------------------------------------------------
+\newcommand{\zonetext}{0.55\textwidth}
+\newcommand{\zonefig}{0.42\textwidth}
+\newcommand{\zonehalf}{0.48\textwidth}
+
+% --- 章节分隔页（Part 编号 + 标题 + 一句话主旨）------------------------------
+% 在每个 \section 之前用 \renewcommand{\secblurb}{...} 设置本节主旨。
+\newcommand{\secblurb}{}
+\AtBeginSection[]{%
+  \begin{frame}[plain,c]
+    \centering
+    {\color{sustechgrey}\large Part~\thesection}\\[0.6em]
+    {\color{sustechblue}\Huge\bfseries\insertsectionhead}\\[0.8em]
+    {\color{emph}\rule{2cm}{2pt}}\\[1.0em]
+    \begin{minipage}{0.78\textwidth}\centering
+      {\color{sustechink}\normalsize\secblurb}
+    \end{minipage}
+  \end{frame}}
+
+\mode<all>

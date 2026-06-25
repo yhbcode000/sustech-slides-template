@@ -1,0 +1,334 @@
+% !TEX program = xelatex
+% =============================================================================
+% 模板 / TEMPLATE —— 使用可复用的 sustech 主题
+%
+% 用法：复制本文件为 main.tex，替换所有 〈…〉 占位符为真实内容即可。
+% 构建：latexmk -xelatex main_template.tex
+%       （latexmkrc 已把 ./sustech-theme// 加入 TEXINPUTS）
+%
+% 本模板演示主题提供的全部能力：
+%   配色 / 章节分隔页(含一句话主旨) / \shl \keyword \brandemph \hlbox
+%   \metric / callout / block / exampleblock / 表格(\theadrow\altrow\thc)
+%   \fitfigure + \figcap / 参考文献 / 附录 backup / 标题页 logo
+% =============================================================================
+\documentclass[aspectratio=169,10pt]{ctexbeamer}
+
+\usetheme{sustech}        % Madrid 基础 + 学术配色 + 排版宏（见 sustech-theme/）
+
+\usepackage{amssymb}
+\usepackage{tikz}
+\graphicspath{{figures/}}
+
+% --- 占位辅助（仅模板用；真实稿件可删除）------------------------------------
+% 行内占位文字
+\newcommand{\ph}[1]{\textcolor{sustechgrey}{〈#1〉}}
+% 图片占位框（替换为 \fitfigure{your_image} 即可）
+\newcommand{\phfig}{%
+  \fcolorbox{cardgrey}{bgsoft}{%
+    \parbox[c][0.42\textheight][c]{0.96\linewidth}{\centering
+      \color{sustechgrey}（图片占位 \textbar\ \texttt{\textbackslash fitfigure\{...\}}）}}}
+
+% --- 元信息（替换为你的题目 / 作者）------------------------------------------
+\title[\ph{短标题}]{\ph{中文主标题}}
+\subtitle{\ph{英文副标题 / English subtitle}}
+\author[\ph{汇报人}]{\ph{汇报人姓名}}
+\institute[\ph{机构}]{\ph{机构} \textperiodcentered\ \ph{会议 / 期刊}}
+\date{\ph{YYYY-MM-DD} \textperiodcentered\ \ph{地点}}
+% 标题页 logo 由 sustech 主题自动提供；如需更换：\renewcommand{\sustechlogo}{...}
+
+\begin{document}
+
+% ============================ 标题页 ============================
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+% ============================ 目录 ============================
+\begin{frame}{目录}
+  \tableofcontents[hideallsubsections]
+\end{frame}
+
+% ============================ 1. 作者介绍 ============================
+\renewcommand{\secblurb}{\ph{本节一句话主旨：团队 / 作者与本文的关系}}
+\section{作者介绍}
+
+\begin{frame}{作者介绍}
+  \begin{columns}[T]
+    \begin{column}{\zonehalf}
+      \begin{block}{核心作者}
+        \begin{itemize}
+          \item \shl{\ph{一作姓名}}：\ph{单位、研究方向、与本文的角色}。
+          \item \shl{\ph{合作者}}：\ph{贡献}。
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{\zonehalf}
+      \begin{block}{通讯作者}
+        \begin{itemize}
+          \item \shl{\ph{通讯作者}}：\keyword{\ph{领域}} \ph{代表性背景}。
+          \item \ph{实验室 / 代表性工作}。
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+  \tightgap
+  \begin{callout}[研究脉络]
+    \ph{用一句话概括该团队的研究主线与本文的位置}。
+  \end{callout}
+\end{frame}
+
+% ============================ 2. 研究背景与动机 ============================
+\renewcommand{\secblurb}{\ph{本节一句话主旨：本文要解决的问题与核心贡献}}
+\section{研究背景与动机}
+
+\begin{frame}{这篇论文在做什么？}
+  \begin{columns}[T]
+    \begin{column}{\zonetext}
+      \begin{itemize}
+        \item 提出 \shl{\ph{方法名}}：一个\keyword{\ph{关键特性}}的\ph{系统 / 方法}。
+        \item 把 \brandemph{\ph{要素一}}、\brandemph{\ph{要素二}} 整合在一起。
+        \item 覆盖 \ph{任务 / 场景范围}。
+        \item 仅需 \hlbox{\ph{关键数字}} 即可 \keyword{\ph{核心收益}}。
+      \end{itemize}
+    \end{column}
+    \begin{column}{\zonefig}
+      \centering
+      \phfig
+      \tightgap
+      \figcap{1}{\ph{图注}}
+    \end{column}
+  \end{columns}
+  \deckgap
+  \centering
+  \metric{\ph{指标}}{\ph{说明}}\hfill
+  \metric{\ph{指标}}{\ph{说明}}\hfill
+  \metric{\ph{指标}}{\ph{说明}}
+\end{frame}
+
+% ============================ 3. 相关工作 ============================
+\renewcommand{\secblurb}{\ph{本节一句话主旨：相对已有工作的关键差异}}
+\section{相关工作}
+
+\begin{frame}{研究领域与相关工作}
+  \begin{columns}[T]
+    \begin{column}{\zonehalf}
+      \begin{block}{所属领域}
+        \begin{itemize}
+          \item \keyword{\ph{方向一}}
+          \item \keyword{\ph{方向二}}
+          \item \ph{方向三}
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{\zonehalf}
+      \begin{block}{与既有工作的关系}
+        \begin{itemize}
+          \item 基础：\shl{\ph{基线 / 算法}}
+          \item 对比：\shl{\ph{对比方法}}
+          \item 最相关：\shl{\ph{最相关工作}} —— \ph{差异}
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+  \tightgap
+  \begin{callout}[关键差异]
+    \ph{本文相对最相关工作的一句话差异}。
+  \end{callout}
+\end{frame}
+
+% ============================ 4. 方法 ============================
+\renewcommand{\secblurb}{\ph{本节一句话主旨：方法的核心思想与组成}}
+\section{方法}
+
+\begin{frame}{方法 —— 总览}
+  \begin{columns}[T]
+    \begin{column}{\zonehalf}
+      \begin{itemize}
+        \item \shl{\ph{组件一}}：\ph{作用}。
+        \item \shl{\ph{组件二}}：\ph{作用}。
+        \item \ph{数据流 / 训练流程要点}。
+      \end{itemize}
+    \end{column}
+    \begin{column}{\zonehalf}
+      \centering
+      \phfig
+      \tightgap
+      \figcap{2}{\ph{系统 / 方法框图}}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{方法 —— 核心设计要素}
+  \begin{itemize}
+    \item \shl{\ph{要素 1}}：\ph{说明} $\to$ \ph{收益}。
+    \item \shl{\ph{要素 2}}：\ph{说明}。
+    \item \shl{\ph{要素 3}}：\ph{说明}。
+    \item \shl{\ph{要素 4}}：\ph{说明}。
+  \end{itemize}
+  \tightgap
+  \begin{callout}[要点]
+    \ph{方法层面最重要的一句话结论}。
+  \end{callout}
+\end{frame}
+
+% ============================ 5. 实验设计 ============================
+\renewcommand{\secblurb}{\ph{本节一句话主旨：任务范围与评测协议}}
+\section{实验设计}
+
+\begin{frame}{实验设计}
+  \begin{columns}[T]
+    \begin{column}{\zonetext}
+      \begin{block}{任务 / 数据}
+        \begin{itemize}
+          \setlength{\itemsep}{0.3em}
+          \item \ph{任务一}
+          \item \ph{任务二}
+          \item \ph{任务三}
+        \end{itemize}
+      \end{block}
+      \begin{exampleblock}{评测协议}
+        \small \ph{评测方式、指标、试验次数}。\\[0.15em]
+        {\footnotesize\color{sustechgrey} 基线：\ph{baseline A · B · C}}
+      \end{exampleblock}
+    \end{column}
+    \begin{column}{\zonefig}
+      \centering
+      \phfig
+      \tightgap
+      \figcap{3}{\ph{任务图示}}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ============================ 6. 实验结果 ============================
+\renewcommand{\secblurb}{\ph{本节一句话主旨：最重要的量化结论}}
+\section{实验结果}
+
+\begin{frame}{实验结果 —— 主表}
+  \centering
+  \renewcommand{\arraystretch}{1.15}
+  \begin{tabular}{lcccc}
+    \toprule
+    \theadrow \thc{\ph{任务}} & \thc{\ph{基线}} & \thc{\ph{本文}} & \thc{\ph{指标A}} & \thc{\ph{指标B}}\\
+    \midrule
+    \ph{行 1}        & \ph{·} & \shl{\ph{·}} & \ph{·} & \shl{\ph{·}}\\
+    \altrow \ph{行 2} & \ph{·} & \shl{\ph{·}} & \ph{·} & \shl{\ph{·}}\\
+    \ph{行 3}        & \ph{·} & \shl{\ph{·}} & \ph{·} & \shl{\ph{·}}\\
+    \midrule
+    \theadrow \thc{平均} & \thc{\ph{·}} & \thc{\ph{·}} & \thc{\ph{·}} & \thc{\ph{·}}\\
+    \bottomrule
+  \end{tabular}
+  \deckgap
+  \begin{callout}[结论]
+    \ph{用一句话点出主表的核心结论（含关键数字）}。
+  \end{callout}
+\end{frame}
+
+\begin{frame}{实验结果 —— 分析}
+  \begin{columns}[T]
+    \begin{column}{\zonehalf}
+      \centering
+      \phfig
+      \tightgap
+      \figcap{4}{\ph{曲线 / 分析图}}
+    \end{column}
+    \begin{column}{\zonehalf}
+      \begin{itemize}
+        \item \shl{\ph{现象一}}：\ph{解读}。
+        \item \shl{\ph{现象二}}：\ph{解读}。
+        \item \shl{\ph{现象三}}：\ph{解读}。
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ============================ 7. 局限性 ============================
+\renewcommand{\secblurb}{\ph{本节一句话主旨：主要局限与未来方向}}
+\section{局限性}
+
+\begin{frame}{局限性}
+  \begin{itemize}
+    \item \shl{\ph{局限一}}：\ph{说明}。
+    \item \shl{\ph{局限二}}：\ph{说明}。
+    \item \shl{\ph{局限三}}：\ph{说明}。
+  \end{itemize}
+  \begin{callout}[作者展望]
+    \ph{作者给出的未来方向}。
+  \end{callout}
+\end{frame}
+
+% ============================ 8. 要点总结 ============================
+\renewcommand{\secblurb}{\ph{本节一句话主旨：全文最值得带走的结论}}
+\section{要点总结}
+
+\begin{frame}{要点总结（Takeaways）}
+  \begin{enumerate}
+    \item \ph{要点一}。
+    \item \shl{\ph{要点二}}。
+    \item \ph{要点三}。
+  \end{enumerate}
+  \begin{callout}[一句话带走]
+    \ph{一句话总结全文}。
+  \end{callout}
+\end{frame}
+
+% ============================ 9. 参考文献 ============================
+\renewcommand{\secblurb}{\ph{本节一句话主旨：关键参考与根基工作}}
+\section{参考文献}
+
+\begin{frame}{参考文献}
+  \setbeamertemplate{bibliography item}[text]
+  \footnotesize
+  \begin{thebibliography}{9}
+    \bibitem{ref1} \ph{作者}. \textit{\ph{标题}}. \ph{会议/期刊}, \ph{年份}.（本文）
+    \bibitem{ref2} \ph{作者}. \textit{\ph{标题}}. \ph{会议/期刊}, \ph{年份}.
+    \bibitem{ref3} \ph{作者}. \textit{\ph{标题}}. \ph{会议/期刊}, \ph{年份}.
+    \bibitem{ref4} \ph{作者}. \textit{\ph{标题}}. \ph{会议/期刊}, \ph{年份}.
+  \end{thebibliography}
+\end{frame}
+
+% ============================ Q&A ============================
+\begin{frame}[plain,c]
+  \centering
+  {\fontsize{40}{44}\selectfont\bfseries\color{emph} Q\,\&\,A}
+
+  \deckgap
+  {\Large \ph{致谢语}}
+
+  \deckgap
+  {\color{sustechgrey}\footnotesize \ph{汇报人} \textperiodcentered\ \ph{机构}\\
+   \ph{联系方式 / 主页}}
+\end{frame}
+
+% ============================ 附录 / Backup ============================
+\appendix
+
+\begin{frame}[plain,c]
+  \centering
+  {\color{sustechgrey}\large Appendix}\\[0.6em]
+  {\Huge\bfseries 备用幻灯片 / Backup}\\[0.9em]
+  {\color{emph}\rule{2cm}{2pt}}
+\end{frame}
+
+\begin{frame}{附录 A —— \ph{补充主题}}
+  \begin{columns}[T]
+    \begin{column}{\zonetext}
+      \begin{itemize}
+        \item \shl{\ph{补充点一}}：\ph{说明}。
+        \item \ph{补充点二}。
+      \end{itemize}
+    \end{column}
+    \begin{column}{\zonefig}
+      \centering
+      \phfig
+      \tightgap
+      \figcap{5}{\ph{补充图}}
+    \end{column}
+  \end{columns}
+  \tightgap
+  \begin{callout}[备注]
+    \ph{补充说明}。
+  \end{callout}
+\end{frame}
+
+\end{document}

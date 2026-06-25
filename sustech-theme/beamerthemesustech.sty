@@ -1,0 +1,59 @@
+% beamerthemesustech.sty
+% =============================================================================
+% 可复用 SUSTech Beamer 主题（在标准 Madrid 主题之上重新配色 + 排版宏）。
+%
+% Theme author / 主题作者：Haobo Yang
+%   Email : yhbcode000@foxmail.com
+%   GitHub: github.com/yhbcode000
+% 欢迎自由使用与修改；保留此署名即可。
+%
+% 用法（配合本文件夹同级的 latexmkrc 把 ./sustech-theme// 加入 TEXINPUTS）：
+%     \documentclass[aspectratio=169,10pt]{ctexbeamer}
+%     \usetheme{sustech}
+%     ... 正文 ...
+%
+% 提供：
+%   - 学术配色（低饱和蓝主色 + 橙/金强调 + 灰绿/浅灰辅助 + 白底深灰）
+%   - 排版宏 \shl \keyword \brandemph \hlbox \fitfigure \figcap \metric
+%   - 环境 callout，表格辅助 \theadrow \altrow \thc，分区宽度 \zone*
+%   - 含“一句话主旨”的章节分隔页（配 \secblurb 使用）
+%   - 作者 credit 信息宏 \creditauthor/\creditgithub/\creditemail（不自动渲染）
+% =============================================================================
+\ProvidesPackage{beamerthemesustech}[2026/06/25 SUSTech reusable theme (Madrid-based)]
+
+\mode<presentation>
+
+% 基础布局：标准 Madrid
+\usetheme{Madrid}
+\setbeamertemplate{navigation symbols}{}
+
+% 重新配色（学术调色板）
+\usecolortheme{sustech}
+
+% 排版宏与章节分隔页
+\RequirePackage{beamerthemesustech-elements}
+
+% --- 主题自带 logo -----------------------------------------------------------
+% logo 随主题打包在 sustech-theme/assets/，并把该目录追加到图片搜索路径
+% （在文档开始时追加，避免被正文里的 \graphicspath 覆盖）。
+\RequirePackage{graphicx}
+\makeatletter
+\AtBeginDocument{%
+  \g@addto@macro\Ginput@path{{sustech-theme/assets/}}%
+}
+\makeatother
+% logo 路径宏（可在正文用 \renewcommand{\sustechlogo}{...} 覆盖）
+\providecommand{\sustechlogo}{sustech_logo}
+% 默认把 logo 作为标题页 \titlegraphic（用户仍可在正文重设 \titlegraphic 覆盖）
+\titlegraphic{\includegraphics[height=0.18\paperheight,keepaspectratio]{\sustechlogo}}
+
+% --- 主题作者 credit 宏（默认 Haobo Yang，可 \setcredit* 覆盖）--------------
+% 仅定义信息宏，不强制渲染到每页；如需展示可自行放到标题页 / 页脚。
+\newcommand{\creditauthor}{Haobo Yang}
+\newcommand{\creditgithub}{github.com/yhbcode000}
+\newcommand{\creditemail}{yhbcode000@foxmail.com}
+\newcommand{\setcreditauthor}[1]{\renewcommand{\creditauthor}{#1}}
+\newcommand{\setcreditgithub}[1]{\renewcommand{\creditgithub}{#1}}
+\newcommand{\setcreditemail}[1]{\renewcommand{\creditemail}{#1}}
+
+\mode<all>
