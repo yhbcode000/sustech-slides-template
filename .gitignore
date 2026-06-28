@@ -16,3 +16,6 @@
 *.xdv
 *.pdf
 build*.log
+
+# ...but keep the rendered template preview
+!main_template.pdf
