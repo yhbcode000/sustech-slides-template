@@ -6,10 +6,16 @@
 % 构建：latexmk -xelatex main_template.tex
 %       （latexmkrc 已把 ./sustech-theme// 加入 TEXINPUTS）
 %
-% 本模板演示主题提供的全部能力：
-%   配色 / 章节分隔页(含一句话主旨) / \shl \keyword \brandemph \hlbox
-%   \metric / callout / block / exampleblock / 表格(\theadrow\altrow\thc)
-%   \fitfigure + \figcap / 参考文献 / 附录 backup / 标题页 logo
+% 设计约定（2026-06 更新）：
+%   [卡片] block/exampleblock 一律竖向堆叠，禁止双栏并排卡片。
+%   [大图] 论文主图各自独占 [plain,c] 全幅帧，标题直接 \figcap：
+%          \begin{frame}[plain,c]
+%            \centering
+%            \includegraphics[height=0.92\textheight,width=\textwidth,keepaspectratio]{...}
+%            \figcap{N}{标题}   ← \figcap 内置 \par\smallskip\centering，无需额外 \tightgap
+%          \end{frame}
+%   [指标] \metric 必须把 \times 等数学符号包在 $...$ 中（如 $10\times$）。
+%   [度数] 用 $^\circ$ 而非 \textdegree（后者需 textcomp 包）。
 % =============================================================================
 \documentclass[aspectratio=169,10pt]{ctexbeamer}
 
@@ -34,7 +40,6 @@
 \author[\ph{汇报人}]{\ph{汇报人姓名}}
 \institute[\ph{机构}]{\ph{机构} \textperiodcentered\ \ph{会议 / 期刊}}
 \date{\ph{YYYY-MM-DD} \textperiodcentered\ \ph{地点}}
-% 标题页 logo 由 sustech 主题自动提供；如需更换：\renewcommand{\sustechlogo}{...}
 
 \begin{document}
 
@@ -49,28 +54,24 @@
 \end{frame}
 
 % ============================ 1. 作者介绍 ============================
+% [卡片] 竖向堆叠，禁止双栏。
 \renewcommand{\secblurb}{\ph{本节一句话主旨：团队 / 作者与本文的关系}}
 \section{作者介绍}
 
 \begin{frame}{作者介绍}
-  \begin{columns}[T]
-    \begin{column}{\zonehalf}
-      \begin{block}{核心作者}
-        \begin{itemize}
-          \item \shl{\ph{一作姓名}}：\ph{单位、研究方向、与本文的角色}。
-          \item \shl{\ph{合作者}}：\ph{贡献}。
-        \end{itemize}
-      \end{block}
-    \end{column}
-    \begin{column}{\zonehalf}
-      \begin{block}{通讯作者}
-        \begin{itemize}
-          \item \shl{\ph{通讯作者}}：\keyword{\ph{领域}} \ph{代表性背景}。
-          \item \ph{实验室 / 代表性工作}。
-        \end{itemize}
-      \end{block}
-    \end{column}
-  \end{columns}
+  \begin{block}{核心作者}
+    \begin{itemize}
+      \item \shl{\ph{一作姓名}}：\ph{单位、研究方向、与本文的角色}。
+      \item \shl{\ph{合作者}}：\ph{贡献}。
+    \end{itemize}
+  \end{block}
+  \tightgap
+  \begin{block}{通讯作者}
+    \begin{itemize}
+      \item \shl{\ph{通讯作者}}：\keyword{\ph{领域}} \ph{代表性背景}。
+      \item \ph{实验室 / 代表性工作}。
+    \end{itemize}
+  \end{block}
   \tightgap
   \begin{callout}[研究脉络]
     \ph{用一句话概括该团队的研究主线与本文的位置}。
@@ -78,26 +79,17 @@
 \end{frame}
 
 % ============================ 2. 研究背景与动机 ============================
+% [大图] 全文概览图(Fig 1)独占全幅帧；本帧纯文字。
 \renewcommand{\secblurb}{\ph{本节一句话主旨：本文要解决的问题与核心贡献}}
 \section{研究背景与动机}
 
 \begin{frame}{这篇论文在做什么？}
-  \begin{columns}[T]
-    \begin{column}{\zonetext}
-      \begin{itemize}
-        \item 提出 \shl{\ph{方法名}}：一个\keyword{\ph{关键特性}}的\ph{系统 / 方法}。
-        \item 把 \brandemph{\ph{要素一}}、\brandemph{\ph{要素二}} 整合在一起。
-        \item 覆盖 \ph{任务 / 场景范围}。
-        \item 仅需 \hlbox{\ph{关键数字}} 即可 \keyword{\ph{核心收益}}。
-      \end{itemize}
-    \end{column}
-    \begin{column}{\zonefig}
-      \centering
-      \phfig
-      \tightgap
-      \figcap{1}{\ph{图注}}
-    \end{column}
-  \end{columns}
+  \begin{itemize}
+    \item 提出 \shl{\ph{方法名}}：一个\keyword{\ph{关键特性}}的\ph{系统 / 方法}。
+    \item 把 \brandemph{\ph{要素一}}、\brandemph{\ph{要素二}} 整合在一起。
+    \item 覆盖 \ph{任务 / 场景范围}。
+    \item 仅需 \hlbox{\ph{关键数字}} 即可 \keyword{\ph{核心收益}}。
+  \end{itemize}
   \deckgap
   \centering
   \metric{\ph{指标}}{\ph{说明}}\hfill
@@ -105,31 +97,34 @@
   \metric{\ph{指标}}{\ph{说明}}
 \end{frame}
 
+% 可选：全文概览图独立帧
+% \begin{frame}[plain,c]
+%   \centering
+%   \includegraphics[height=0.92\textheight,width=\textwidth,keepaspectratio]{fig1.jpg}
+%   \figcap{1}{\ph{图注}}
+% \end{frame}
+
 % ============================ 3. 相关工作 ============================
+% [卡片] 竖向堆叠。
 \renewcommand{\secblurb}{\ph{本节一句话主旨：相对已有工作的关键差异}}
 \section{相关工作}
 
 \begin{frame}{研究领域与相关工作}
-  \begin{columns}[T]
-    \begin{column}{\zonehalf}
-      \begin{block}{所属领域}
-        \begin{itemize}
-          \item \keyword{\ph{方向一}}
-          \item \keyword{\ph{方向二}}
-          \item \ph{方向三}
-        \end{itemize}
-      \end{block}
-    \end{column}
-    \begin{column}{\zonehalf}
-      \begin{block}{与既有工作的关系}
-        \begin{itemize}
-          \item 基础：\shl{\ph{基线 / 算法}}
-          \item 对比：\shl{\ph{对比方法}}
-          \item 最相关：\shl{\ph{最相关工作}} —— \ph{差异}
-        \end{itemize}
-      \end{block}
-    \end{column}
-  \end{columns}
+  \begin{block}{所属领域}
+    \begin{itemize}
+      \item \keyword{\ph{方向一}}
+      \item \keyword{\ph{方向二}}
+      \item \ph{方向三}
+    \end{itemize}
+  \end{block}
+  \tightgap
+  \begin{block}{与既有工作的关系}
+    \begin{itemize}
+      \item 基础：\shl{\ph{基线 / 算法}}
+      \item 对比：\shl{\ph{对比方法}}
+      \item 最相关：\shl{\ph{最相关工作}} —— \ph{差异}
+    \end{itemize}
+  \end{block}
   \tightgap
   \begin{callout}[关键差异]
     \ph{本文相对最相关工作的一句话差异}。
@@ -137,26 +132,24 @@
 \end{frame}
 
 % ============================ 4. 方法 ============================
+% [大图] 系统框图(Fig 2)独占全幅帧；本帧纯文字。
 \renewcommand{\secblurb}{\ph{本节一句话主旨：方法的核心思想与组成}}
 \section{方法}
 
 \begin{frame}{方法 —— 总览}
-  \begin{columns}[T]
-    \begin{column}{\zonehalf}
-      \begin{itemize}
-        \item \shl{\ph{组件一}}：\ph{作用}。
-        \item \shl{\ph{组件二}}：\ph{作用}。
-        \item \ph{数据流 / 训练流程要点}。
-      \end{itemize}
-    \end{column}
-    \begin{column}{\zonehalf}
-      \centering
-      \phfig
-      \tightgap
-      \figcap{2}{\ph{系统 / 方法框图}}
-    \end{column}
-  \end{columns}
+  \begin{itemize}
+    \item \shl{\ph{组件一}}：\ph{作用}。
+    \item \shl{\ph{组件二}}：\ph{作用}。
+    \item \ph{数据流 / 训练流程要点}。
+  \end{itemize}
 \end{frame}
+
+% 可选：系统框图独立帧
+% \begin{frame}[plain,c]
+%   \centering
+%   \includegraphics[height=0.92\textheight,width=\textwidth,keepaspectratio]{fig2.jpg}
+%   \figcap{2}{\ph{系统 / 方法框图}}
+% \end{frame}
 
 \begin{frame}{方法 —— 核心设计要素}
   \begin{itemize}
@@ -172,35 +165,35 @@
 \end{frame}
 
 % ============================ 5. 实验设计 ============================
+% [卡片] 竖向堆叠 + [大图] 任务图示(Fig 3)独占全幅帧。
 \renewcommand{\secblurb}{\ph{本节一句话主旨：任务范围与评测协议}}
 \section{实验设计}
 
 \begin{frame}{实验设计}
-  \begin{columns}[T]
-    \begin{column}{\zonetext}
-      \begin{block}{任务 / 数据}
-        \begin{itemize}
-          \setlength{\itemsep}{0.3em}
-          \item \ph{任务一}
-          \item \ph{任务二}
-          \item \ph{任务三}
-        \end{itemize}
-      \end{block}
-      \begin{exampleblock}{评测协议}
-        \small \ph{评测方式、指标、试验次数}。\\[0.15em]
-        {\footnotesize\color{sustechgrey} 基线：\ph{baseline A · B · C}}
-      \end{exampleblock}
-    \end{column}
-    \begin{column}{\zonefig}
-      \centering
-      \phfig
-      \tightgap
-      \figcap{3}{\ph{任务图示}}
-    \end{column}
-  \end{columns}
+  \begin{block}{任务 / 数据}
+    \begin{itemize}
+      \setlength{\itemsep}{0.3em}
+      \item \ph{任务一}
+      \item \ph{任务二}
+      \item \ph{任务三}
+    \end{itemize}
+  \end{block}
+  \tightgap
+  \begin{exampleblock}{评测协议}
+    \small \ph{评测方式、指标、试验次数}。\\[0.15em]
+    {\footnotesize\color{sustechgrey} 基线：\ph{baseline A · B · C}}
+  \end{exampleblock}
 \end{frame}
 
+% 可选：任务图示独立帧
+% \begin{frame}[plain,c]
+%   \centering
+%   \includegraphics[height=0.92\textheight,width=\textwidth,keepaspectratio]{fig3.jpg}
+%   \figcap{3}{\ph{任务图示}}
+% \end{frame}
+
 % ============================ 6. 实验结果 ============================
+% [大图] 结果图(Fig 4)独占全幅帧。
 \renewcommand{\secblurb}{\ph{本节一句话主旨：最重要的量化结论}}
 \section{实验结果}
 
@@ -224,22 +217,19 @@
   \end{callout}
 \end{frame}
 
+% 可选：结果图独立帧
+% \begin{frame}[plain,c]
+%   \centering
+%   \includegraphics[height=0.92\textheight,width=\textwidth,keepaspectratio]{fig4.jpg}
+%   \figcap{4}{\ph{曲线 / 分析图}}
+% \end{frame}
+
 \begin{frame}{实验结果 —— 分析}
-  \begin{columns}[T]
-    \begin{column}{\zonehalf}
-      \centering
-      \phfig
-      \tightgap
-      \figcap{4}{\ph{曲线 / 分析图}}
-    \end{column}
-    \begin{column}{\zonehalf}
-      \begin{itemize}
-        \item \shl{\ph{现象一}}：\ph{解读}。
-        \item \shl{\ph{现象二}}：\ph{解读}。
-        \item \shl{\ph{现象三}}：\ph{解读}。
-      \end{itemize}
-    \end{column}
-  \end{columns}
+  \begin{itemize}
+    \item \shl{\ph{现象一}}：\ph{解读}。
+    \item \shl{\ph{现象二}}：\ph{解读}。
+    \item \shl{\ph{现象三}}：\ph{解读}。
+  \end{itemize}
 \end{frame}
 
 % ============================ 7. 局限性 ============================
@@ -311,20 +301,10 @@
 \end{frame}
 
 \begin{frame}{附录 A —— \ph{补充主题}}
-  \begin{columns}[T]
-    \begin{column}{\zonetext}
-      \begin{itemize}
-        \item \shl{\ph{补充点一}}：\ph{说明}。
-        \item \ph{补充点二}。
-      \end{itemize}
-    \end{column}
-    \begin{column}{\zonefig}
-      \centering
-      \phfig
-      \tightgap
-      \figcap{5}{\ph{补充图}}
-    \end{column}
-  \end{columns}
+  \begin{itemize}
+    \item \shl{\ph{补充点一}}：\ph{说明}。
+    \item \ph{补充点二}。
+  \end{itemize}
   \tightgap
   \begin{callout}[备注]
     \ph{补充说明}。

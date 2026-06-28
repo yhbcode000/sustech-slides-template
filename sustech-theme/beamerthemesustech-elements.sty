@@ -27,8 +27,8 @@
 % 图注前缀（默认“图”，可用 \setfigureprefix 改为 Figure 等）
 \newcommand{\figureprefix}{图}
 \newcommand{\setfigureprefix}[1]{\renewcommand{\figureprefix}{#1}}
-% \figcap{n}{文字} -> “图 n: 文字”；前缀与编号不拆行
-\newcommand{\figcap}[2]{{\footnotesize\color{sustechgrey}\mbox{\figureprefix~#1:}~#2}}
+% \figcap{n}{文字} -> "图 n: 文字" — 自动换行并居中，标题始终在图下方
+\newcommand{\figcap}[2]{\par\smallskip{\centering\footnotesize\color{sustechgrey}\mbox{\figureprefix~#1:}~#2\par}}
 
 % --- 指标大数字 --------------------------------------------------------------
 % \metric{100\%}{成功率}
