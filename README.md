@@ -150,7 +150,7 @@ latexmk -xelatex main.tex
 最小化导言区：
 
 ```latex
-\documentclass[aspectratio=169,10pt]{ctexbeamer}
+\documentclass[aspectratio=169,10pt]{ctexbeamer}  % 比例见下方“幻灯片比例”一节
 \usetheme{sustech}
 \title[短标题]{中文主标题}
 \subtitle{English subtitle}
@@ -163,6 +163,25 @@ latexmk -xelatex main.tex
 ```
 
 🔁 移植到别处：将 `sustech-theme/` **和** `latexmkrc` 复制到你的 `main.tex` 旁边，然后 `\usetheme{sustech}`。
+
+---
+
+## 🖥️ 幻灯片比例 | Aspect Ratio
+
+比例由 `\documentclass` 的 `aspectratio` 选项控制（beamer 要求在文档类处设置）。**只改这一个数值即可**，标题页与所有排版宏都按相对宽度自适应，正文无需改动：
+
+```latex
+\documentclass[aspectratio=169,10pt]{ctexbeamer}   % 改 169 为下表数值
+```
+
+| 比例 | 选项值 | 适用场景 | 推荐 |
+|:---|:---|:---|:---:|
+| **16:9** | `aspectratio=169` | 宽屏、会议 / 投影默认 | ✅ |
+| **16:10** | `aspectratio=1610` | 部分笔记本 / 投影 | ✅ |
+| **4:3** | `aspectratio=43` | 老式投影 / 教室白板 | ✅ |
+| 其它 | `149` · `54` · `32` · `1410` | 14:9 · 5:4 · 3:2 · 14:10 | |
+
+> 💡 不确定就用 **16:9**（`169`）——当前主流投影与在线会议的默认比例。
 
 ---
 

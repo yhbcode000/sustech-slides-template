@@ -65,4 +65,63 @@
   \date{#1\ifdefempty{\presvenue}{}{ \textperiodcentered\ \presvenue}}%
 }
 
+% --- 标题页“论文出处”行 paperfrom ------------------------------------------
+% 把“讲者单位”与“论文所发表的期刊/会议”在视觉与语义上分开，避免被误读为同一主体。
+% 用法：\institute[短名]{讲者单位 \paperfrom{期刊 / 会议}{年份}}
+%   渲染：单位另起一行，下方加“[论文来源] 〈斜体期刊〉 · 年份”小字。
+\newcommand{\paperfrom}[2]{%
+  \par\smallskip
+  {\footnotesize\itshape\color{emph} #1}%
+  {\footnotesize\color{sustechgrey}\ \textperiodcentered\ #2}%
+}
+
+% --- 标题页字段：汇报人 / 论文领域 / 论文来源 -------------------------------
+% 语义约定（新版标题页）：
+%   \title    中文主标题        \subtitle 英文副标题
+%   \author   论文全部作者      \institute 团队所属单位
+%   \setsource{期刊}{年份}      论文来源（可选）
+%   \setdomains{...}            论文所属领域列表（用 \domaintag 包裹各项）
+%   \setpresenter{} \setvenue{} \date{}  →  底部“汇报人 · 地点 · 时间”
+\newcommand{\presenter}{}
+\newcommand{\setpresenter}[1]{\renewcommand{\presenter}{#1}}
+\newcommand{\paperdomains}{}
+\newcommand{\setdomains}[1]{\renewcommand{\paperdomains}{#1}}
+% 单个领域标签（浅灰底 + 蓝字小药丸）
+\newcommand{\domaintag}[1]{\colorbox{cardgrey}{\small\color{sustechblue2}\strut\,#1\,}\hspace{0.35em}}
+% 论文来源（可选）：\setsource{期刊 / 会议}{年份}
+\newcommand{\papersourceinfo}{}
+\newcommand{\setsource}[2]{\renewcommand{\papersourceinfo}{\paperfrom{#1}{#2}}}
+% 底部信息行：汇报人 · 地点 · 时间
+\newcommand{\metasep}{\hspace{0.7em}\textperiodcentered\hspace{0.7em}}
+\newcommand{\titlemetaline}{%
+  \ifdefempty{\presenter}{}{汇报人：\presenter\metasep}%
+  \ifdefempty{\presvenue}{}{\presvenue\metasep}%
+  \insertdate}
+
+% --- 自定义标题页模板 --------------------------------------------------------
+% 结构：标题/副标题 → 论文全部作者 → 团队所属单位 →（论文来源）→ 领域 →
+%       汇报人·地点·时间 → logo
+\setbeamertemplate{title page}{%
+  \centering
+  \vfill
+  \begin{beamercolorbox}[wd=0.92\paperwidth,sep=12pt,center,rounded=true,shadow=true]{title}
+    {\usebeamerfont{title}\inserttitle\par}%
+    \ifx\insertsubtitle\@empty\else
+      \vskip0.45em
+      {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+    \fi
+  \end{beamercolorbox}%
+  \vskip1.1em
+  {\usebeamerfont{author}\insertauthor\par}%
+  \vskip0.3em
+  {\usebeamerfont{institute}\usebeamercolor[fg]{institute}\insertinstitute\par}%
+  \ifdefempty{\papersourceinfo}{}{\papersourceinfo\par}%
+  \vskip0.9em
+  \ifdefempty{\paperdomains}{}{\paperdomains\par\vskip0.9em}%
+  {\small\color{sustechgrey}\titlemetaline\par}%
+  \vskip1.0em
+  {\inserttitlegraphic\par}%
+  \vfill
+}
+
 \mode<all>

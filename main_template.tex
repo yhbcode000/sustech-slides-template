@@ -17,6 +17,14 @@
 %   [指标] \metric 必须把 \times 等数学符号包在 $...$ 中（如 $10\times$）。
 %   [度数] 用 $^\circ$ 而非 \textdegree（后者需 textcomp 包）。
 % =============================================================================
+% =============================================================================
+% 幻灯片比例配置（只改 aspectratio 的数值即可）
+%   aspectratio=169   16:9   宽屏，会议/投影默认            ← 推荐
+%   aspectratio=1610  16:10  部分笔记本 / 投影              ← 推荐
+%   aspectratio=43    4:3    老式投影 / 教室白板            ← 推荐
+%   其它可选：149 (14:9) · 54 (5:4) · 32 (3:2) · 1410 (14:10)
+% 标题页与各排版宏均按相对宽度自适应，切换比例无需改正文。
+% =============================================================================
 \documentclass[aspectratio=169,10pt]{ctexbeamer}
 
 \usetheme{sustech}        % Madrid 基础 + 学术配色 + 排版宏（见 sustech-theme/）
@@ -35,13 +43,18 @@
       \color{sustechgrey}（图片占位 \textbar\ \texttt{\textbackslash fitfigure\{...\}}）}}}
 
 % --- 元信息（替换为你的题目 / 作者）------------------------------------------
+% 标题页字段（新版结构，见 sustech-theme 说明）：
+%   主标题 / 副标题 → 论文全部作者 → 团队所属单位 →（论文来源）→ 领域 →
+%   汇报人 · 地点 · 时间 → logo
 \title[\ph{短标题}]{\ph{中文主标题}}
 \subtitle{\ph{英文副标题 / English subtitle}}
-\author[\ph{汇报人}]{\ph{汇报人姓名}}
-\institute[\ph{机构}]{\ph{机构} \textperiodcentered\ \ph{会议 / 期刊}}
-% 汇报地点：用户在此覆盖即可（留空则标题页只显示日期）。
+\author[\ph{一作 et al.}]{\ph{论文全部作者（按论文署名顺序）}}
+\institute[\ph{机构}]{\ph{团队所属单位}}
+\setsource{\ph{会议 / 期刊}}{\ph{年份}}   % 论文来源；不需要可删除本行
+\setdomains{\domaintag{\ph{领域1}}\domaintag{\ph{领域2}}\domaintag{\ph{领域3}}}
+\setpresenter{\ph{汇报人}}
 \setvenue{\ph{地点}}
-\datewithvenue{\ph{YYYY-MM-DD}}
+\date{\ph{YYYY-MM-DD}}
 
 \begin{document}
 
@@ -288,8 +301,8 @@
   {\Large \ph{致谢语}}
 
   \deckgap
-  {\color{sustechgrey}\footnotesize \ph{汇报人} \textperiodcentered\ \ph{机构}\\
-   \ph{联系方式 / 主页}}
+  % 与标题页底部一致（汇报人 · 地点 · 时间）
+  {\color{sustechgrey}\footnotesize \titlemetaline}
 \end{frame}
 
 % ============================ 附录 / Backup ============================
