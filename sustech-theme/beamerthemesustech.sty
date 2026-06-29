@@ -56,4 +56,13 @@
 \newcommand{\setcreditgithub}[1]{\renewcommand{\creditgithub}{#1}}
 \newcommand{\setcreditemail}[1]{\renewcommand{\creditemail}{#1}}
 
+% --- 汇报地点 venue（默认空；用户可在正文用 \setvenue{...} 覆盖）-----------
+% 配合 \datewithvenue 使用：地点非空时自动以 “·” 连接到日期之后。
+\newcommand{\presvenue}{}
+\newcommand{\setvenue}[1]{\renewcommand{\presvenue}{#1}}
+% 把日期与地点组合成 \date 内容（地点为空则只显示日期）。
+\newcommand{\datewithvenue}[1]{%
+  \date{#1\ifdefempty{\presvenue}{}{ \textperiodcentered\ \presvenue}}%
+}
+
 \mode<all>
