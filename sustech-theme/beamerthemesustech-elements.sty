@@ -57,16 +57,28 @@
 
 % --- 双栏分屏（两个独立"迷你幻灯片"共享一页）-------------------------------
 % \twopane{<left content>}{<right content>}
-% Left pane: 47% width, right pane: 47% width, separated by thin grey rule.
+% Left ~33%, right ~63%, thin grey rule between them. 1:2 ratio gives more
+% room for insight blocks on the right while keeping the index readable.
 % Use inside \begin{frame}{title} ... \end{frame}.
 \newcommand{\twopane}[2]{%
-  \begin{minipage}[t][0.88\textheight][t]{0.47\textwidth}\vspace{0pt}%
+  \begin{minipage}[t][0.88\textheight][t]{0.31\textwidth}\vspace{0pt}%
     #1%
   \end{minipage}%
   \hfill{\color{sustechgrey}\vrule width 0.5pt}\hfill%
-  \begin{minipage}[t][0.88\textheight][t]{0.47\textwidth}\vspace{0pt}%
+  \begin{minipage}[t][0.88\textheight][t]{0.62\textwidth}\vspace{0pt}%
     #2%
   \end{minipage}%
+}
+
+% --- 紧凑目录（减半行间距，缩小标题下空隙）----------------------------------
+% Usage: {\tocdense \tableofcontents[hideallsubsections]}
+% Call BEFORE \tableofcontents within the twopane left pane.
+\newcommand{\tocdense}{%
+  \setbeamertemplate{section in toc}{%
+    \vskip0.3em plus 0.1em minus 0.1em%
+    \leavevmode\leftskip=2em%
+    \inserttocsectionnumber.\hskip0.3em\inserttocsection\par%
+  }%
 }
 
 % --- 章节分隔页（Part 编号 + 标题 + 一句话主旨）------------------------------
