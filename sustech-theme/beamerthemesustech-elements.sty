@@ -61,11 +61,11 @@
 % room for insight blocks on the right while keeping the index readable.
 % Use inside \begin{frame}{title} ... \end{frame}.
 \newcommand{\twopane}[2]{%
-  \begin{minipage}[t][0.88\textheight][t]{0.31\textwidth}\vspace{0pt}%
+  \begin{minipage}[t][0.92\textheight][t]{0.31\textwidth}\vspace{0pt}%
     #1%
   \end{minipage}%
   \hfill{\color{sustechgrey}\vrule width 0.5pt}\hfill%
-  \begin{minipage}[t][0.88\textheight][t]{0.62\textwidth}\vspace{0pt}%
+  \begin{minipage}[t][0.92\textheight][t]{0.62\textwidth}\vspace{0pt}%
     #2%
   \end{minipage}%
 }
@@ -75,7 +75,7 @@
 % Call BEFORE \tableofcontents within the twopane left pane.
 \newcommand{\tocdense}{%
   \defbeamertemplate*{section in toc}{tocdense}{%
-    \vskip0.45em plus 0.1em minus 0.1em%
+    \vskip0.22em plus 0.05em minus 0.05em%
     \leavevmode%
     \inserttocsectionnumber.\hskip1em\inserttocsection\par%
   }%
