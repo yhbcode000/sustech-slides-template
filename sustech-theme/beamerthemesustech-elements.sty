@@ -74,10 +74,11 @@
 % Usage: {\tocdense \tableofcontents[hideallsubsections]}
 % Call BEFORE \tableofcontents within the twopane left pane.
 \newcommand{\tocdense}{%
-  \setbeamertemplate{section in toc}%
-    {\vskip0.45em plus 0.1em minus 0.1em}%  pre-text (replaces default 1.5em)
-    {\inserttocsectionnumber.\hskip1em\inserttocsection}%  body
-    {}%  post-text (empty)
+  \defbeamertemplate*{section in toc}{tocdense}{%
+    \vskip0.45em plus 0.1em minus 0.1em%
+    \leavevmode%
+    \inserttocsectionnumber.\hskip1em\inserttocsection\par%
+  }%
 }
 
 % --- 章节分隔页（Part 编号 + 标题 + 一句话主旨）------------------------------
