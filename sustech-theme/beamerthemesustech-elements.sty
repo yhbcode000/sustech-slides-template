@@ -74,13 +74,9 @@
 % Usage: {\tocdense \tableofcontents[hideallsubsections]}
 % Call BEFORE \tableofcontents within the twopane left pane.
 \newcommand{\tocdense}{%
-  \setbeamertemplate{section in toc}{%
+  \defbeamertemplate{section in toc}{default}{%
     \vskip0.45em plus 0.1em minus 0.1em%
-    {\usebeamercolor[fg]{section in toc}%
-      \leavevmode%
-      \inserttocsectionnumber.\hskip1em\inserttocsection%
-    }%
-    \par%
+    \inserttocsectionnumber.\hskip1em\inserttocsection\par%
   }%
 }
 
