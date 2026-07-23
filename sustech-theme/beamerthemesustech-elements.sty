@@ -70,15 +70,18 @@
   \end{minipage}%
 }
 
-% --- 紧凑目录（减半行间距，缩小标题下空隙）----------------------------------
-% Usage: {\tocdense \tableofcontents[hideallsubsections]}
-% Call BEFORE \tableofcontents within the twopane left pane.
-\newcommand{\tocdense}{%
-  \defbeamertemplate*{section in toc}{tocdense}{%
-    \vskip0.22em plus 0.05em minus 0.05em%
-    \leavevmode%
-    \inserttocsectionnumber.\hskip1em\inserttocsection\par%
-  }%
+% --- 紧凑 TOC 环境（手动列 section，sty 提供紧凑间距）-----------------------
+% Usage in main.tex:
+%   \begin{tocdense}
+%     \item 1\quad 作者介绍
+%     ...
+%   \end{tocdense}
+% Section names must be listed explicitly. Spacing controlled entirely by sty.
+\newenvironment{tocdense}{%
+  \vspace{-0.5em}%
+  \begin{itemize}\setlength{\itemsep}{0.06em}%
+}{%
+  \end{itemize}%
 }
 
 % --- 章节分隔页（Part 编号 + 标题 + 一句话主旨）------------------------------
