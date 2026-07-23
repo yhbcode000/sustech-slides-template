@@ -55,6 +55,20 @@
 \newcommand{\zonefig}{0.42\textwidth}
 \newcommand{\zonehalf}{0.48\textwidth}
 
+% --- 双栏分屏（两个独立"迷你幻灯片"共享一页）-------------------------------
+% \twopane{<left content>}{<right content>}
+% Left pane: 47% width, right pane: 47% width, separated by thin grey rule.
+% Use inside \begin{frame}{title} ... \end{frame}.
+\newcommand{\twopane}[2]{%
+  \begin{minipage}[t][0.88\textheight][t]{0.47\textwidth}\vspace{0pt}%
+    #1%
+  \end{minipage}%
+  \hfill{\color{sustechgrey}\vrule width 0.5pt}\hfill%
+  \begin{minipage}[t][0.88\textheight][t]{0.47\textwidth}\vspace{0pt}%
+    #2%
+  \end{minipage}%
+}
+
 % --- 章节分隔页（Part 编号 + 标题 + 一句话主旨）------------------------------
 % 在每个 \section 之前用 \renewcommand{\secblurb}{...} 设置本节主旨。
 \newcommand{\secblurb}{}

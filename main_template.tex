@@ -65,23 +65,11 @@
 
 % ============================ 目录 ============================
 \begin{frame}{目录}
-  \begin{columns}[T]
-    \column{0.45\textwidth}
-    \begin{block}{结构索引}
-      \tableofcontents[hideallsubsections]
-    \end{block}
-    \tightgap
-    \begin{block}{附录}
-      \begin{itemize}\setlength{\itemsep}{0.1em}\footnotesize
-        \item \ph{附录项一}
-        \item \ph{附录项二}
-        \item \ph{附录项三}
-        \item \ph{附录项四}
-      \end{itemize}
-    \end{block}
-  \column{0.55\textwidth}
+  \twopane{%
+    \tableofcontents[hideallsubsections]
+  }{%
     \begin{block}{核心观察}
-      \begin{itemize}\setlength{\itemsep}{0.2em}
+      \begin{itemize}\setlength{\itemsep}{0.15em}
         \item \shl{\ph{关键数字或特性一}}
         \item \shl{\ph{关键数字或特性二}}
         \item \ph{核心观察三}
@@ -91,14 +79,14 @@
     \end{block}
     \tightgap
     \begin{block}{附录亮点}
-      \begin{itemize}\setlength{\itemsep}{0.15em}\footnotesize
-        \item \shl{\ph{亮点一}}
-        \item \shl{\ph{亮点二}}
-        \item \shl{\ph{亮点三}}
-        \item \shl{\ph{亮点四}}
+      \begin{itemize}\setlength{\itemsep}{0.1em}\footnotesize
+        \item \shl{\ph{亮点一}}：\ph{简要描述}
+        \item \shl{\ph{亮点二}}：\ph{简要描述}
+        \item \shl{\ph{亮点三}}：\ph{简要描述}
+        \item \shl{\ph{亮点四}}：\ph{简要描述}
       \end{itemize}
     \end{block}
-  \end{columns}
+  }
 \end{frame}
 
 % ============================ 1. 作者介绍 ============================
