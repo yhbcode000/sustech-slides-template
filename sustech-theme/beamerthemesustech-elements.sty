@@ -75,9 +75,12 @@
 % Call BEFORE \tableofcontents within the twopane left pane.
 \newcommand{\tocdense}{%
   \setbeamertemplate{section in toc}{%
-    \vskip0.3em plus 0.1em minus 0.1em%
-    \leavevmode\leftskip=2em%
-    \inserttocsectionnumber.\hskip0.3em\inserttocsection\par%
+    \vskip0.45em plus 0.1em minus 0.1em%
+    {\usebeamercolor[fg]{section in toc}%
+      \leavevmode%
+      \inserttocsectionnumber.\hskip1em\inserttocsection%
+    }%
+    \par%
   }%
 }
 
