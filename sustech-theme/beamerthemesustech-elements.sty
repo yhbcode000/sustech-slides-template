@@ -70,18 +70,10 @@
   \end{minipage}%
 }
 
-% --- 紧凑 TOC 环境（手动列 section，sty 提供紧凑间距）-----------------------
-% Usage in main.tex:
-%   \begin{tocdense}
-%     \item 1\quad 作者介绍
-%     ...
-%   \end{tocdense}
-% Section names must be listed explicitly. Spacing controlled entirely by sty.
-\newenvironment{tocdense}{%
-  \vspace{-0.5em}%
-  \begin{itemize}\setlength{\itemsep}{0.06em}%
-}{%
-  \end{itemize}%
+% --- 紧凑 TOC（通过 sty 调整 \tableofcontents 间距）--------------------------
+\newcommand{\tocdense}{%
+  \addtobeamertemplate{section in toc}{\vskip-1.2em}{}%
+  \setlength{\parskip}{-0.8em}%
 }
 
 % --- 章节分隔页（Part 编号 + 标题 + 一句话主旨）------------------------------
