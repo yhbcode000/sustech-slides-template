@@ -1,0 +1,553 @@
+% !TEX program = xelatex
+% =============================================================================
+% 实验室调研模板 / LAB SURVEY TEMPLATE — 基于 sustech 主题
+%
+% 用法：复制本文件为 main.tex，替换所有 〈…〉 占位符为真实内容即可。
+% 构建：latexmk -xelatex main_template_lab_survey.tex
+%       （latexmkrc 已把 ./sustech-theme// 加入 TEXINPUTS）
+%
+% 设计约定（2026-07 更新）：
+%   [比例] aspectratio=1610, 10pt — 实验室调研统一 16:10
+%   [卡片] block/exampleblock 一律竖向堆叠，禁止双栏并排卡片。
+%   [大图] 论文主图各自独占 [plain,c] 全幅帧，标题直接 \figcap：
+%          \begin{frame}[plain,c]
+%            \centering
+%            \includegraphics[height=0.85\textheight,width=\textwidth,keepaspectratio]{...}
+%            \figcap{}{标题}   ← \figcap 内置 \par\smallskip\centering
+%          \end{frame}
+%   [指标] \metric 必须把 \times 等数学符号包在 $...$ 中。
+%   [度数] 用 $^\circ$ 而非 \textdegree。
+%   [标注] \con{...} = 灰色去强调文字（实验室调研专用）。
+% =============================================================================
+\documentclass[aspectratio=1610,10pt]{ctexbeamer}
+
+\usetheme{sustech}        % Madrid 基础 + 学术配色 + 排版宏（见 sustech-theme/）
+
+\usepackage{amssymb}
+\usepackage{tikz}
+\graphicspath{{figures/}}
+
+% --- 占位辅助（仅模板用；真实稿件可删除）------------------------------------
+% 行内占位文字
+\newcommand{\ph}[1]{\textcolor{sustechgrey}{〈#1〉}}
+% 图片占位框（替换为 \fitfigure{your_image} 即可）
+\newcommand{\phfig}{%
+  \fcolorbox{cardgrey}{bgsoft}{%
+    \parbox[c][0.42\textheight][c]{0.96\linewidth}{\centering
+      \color{sustechgrey}（图片占位 \textbar\ \texttt{\textbackslash fitfigure\{...\}}）}}}
+% 灰色去强调文字（实验室调研专用）
+\newcommand{\con}[1]{\textcolor{sustechgrey}{#1}}
+
+% --- 元信息（替换为你的题目 / 作者）------------------------------------------
+\title[〈Lab Short Name〉 实验室调研]{〈Lab Full Name〉：〈核心主题一句话〉}
+\subtitle{〈Lab English Name〉 · 〈Affiliation〉}
+\author[〈PI et al.〉]{〈PI Full Name(s)〉}
+\institute[〈Institution〉]{〈Lab Full Name〉 · 〈Institution〉}
+\setsource{Lab Survey}{〈YYYY-MM-DD〉}
+\setdomains{\domaintag{〈领域1〉}\domaintag{〈领域2〉}\domaintag{〈领域3〉}\domaintag{〈领域4〉}}
+\setpresenter{调研报告}
+\setvenue{实验室调研 / 〈Lab Name〉}
+\date{〈YYYY-MM-DD〉}
+
+\begin{document}
+
+% ============================ 标题页 ============================
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+% ============================ 目录 ============================
+\begin{frame}{目录}
+  \vspace{-0.6em}
+  \twopane{%
+    {\tocdense\small\tableofcontents[hideallsubsections]}
+  }{%
+    \begin{block}{团队概览}
+      \begin{itemize}\setlength{\itemsep}{0.15em}
+        \item \shl{PI}：〈PI Name〉，〈Position〉 @ 〈Institution〉
+        \item 〈Lab Size〉 researchers，成立〈Year Founded〉
+        \item 覆盖 \shl{〈Domain Count〉} 个研究方向
+      \end{itemize}
+    \end{block}
+    \tightgap
+    \begin{block}{附录亮点}
+      \begin{itemize}\setlength{\itemsep}{0.1em}\footnotesize
+        \item \shl{可视化分析}：发表年份×主题分布 + 词云
+        \item \shl{附录A}：课题组在业界/学术界的定位与竞争分析
+        \item \shl{附录B}：最新博客/访谈内容解读
+        \item \shl{附录C}：核心论文发表时间线
+      \end{itemize}
+    \end{block}
+  }
+\end{frame}
+
+% ============================ 1. 行业背景 ============================
+\renewcommand{\secblurb}{〈本节一句话主旨：为什么这个实验室/研究方向值得关注〉}
+\section{行业背景}
+
+\begin{frame}{〈Slide Title — 行业趋势或底层逻辑转移〉}
+  \begin{callout}[核心判断：〈Thesis Statement〉]
+    〈Why this lab/domain matters now — 1-2 sentences establishing stakes〉
+  \end{callout}
+  \tightgap
+  \begin{block}{〈Evidence Block Title — 这个团队用什么方式回应了这一趋势〉}
+    \begin{itemize}
+      \item \shl{〈Key Point 1〉}：〈Explanation〉
+      \item \shl{〈Key Point 2〉}：〈Explanation〉
+      \item \shl{〈Key Point 3〉}：〈Explanation〉
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+% 可选：行业全景图独立帧
+% \begin{frame}[plain,c]
+%   \centering
+%   \includegraphics[height=0.85\textheight,width=\textwidth,keepaspectratio]{industry_timeline.png}
+%   \figcap{}{〈图注：行业技术演进时间线〉}
+% \end{frame}
+
+% ============================ 2. 团队溯源 ============================
+\renewcommand{\secblurb}{〈本节一句话主旨：团队从哪里来，知识谱系如何构成其独特优势〉}
+\section{团队溯源}
+
+\begin{frame}{〈Slide Title — 实验室概况〉}
+  \begin{block}{实验室概况}
+    \begin{itemize}
+      \item \shl{〈Lab Full Name〉}：〈Year〉 年成立，〈Location〉
+      \item PI：\shl{〈PI Name〉（〈Position〉）}，〈Brief background highlight〉
+      \item 团队规模：〈N〉 名研究人员，覆盖〈Domain List〉
+      \item 使命：\con{〈One-sentence mission statement〉}
+    \end{itemize}
+  \end{block}
+  \tightgap
+  \begin{callout}[〈Timeline / Output Summary〉]
+    〈Key metric：e.g., N 年 M 项产出 或 核心合作网络描述〉
+  \end{callout}
+\end{frame}
+
+\begin{frame}{〈Slide Title — 知识谱系 / 学术根基〉}
+  \begin{block}{〈PI 1 学术根基〉}
+    \begin{itemize}
+      \item 〈Key milestone 1〉(Year) → 〈Key milestone 2〉(Year) → 〈Key milestone 3〉(Year)
+      \item \con{〈One-line significance〉}
+    \end{itemize}
+  \end{block}
+  \tightgap
+  \begin{block}{〈PI 2 或核心成员学术根基〉}
+    \begin{itemize}
+      \item 〈Key milestone 1〉(Year) → 〈Key milestone 2〉(Year)
+      \item \con{〈One-line significance〉}
+    \end{itemize}
+  \end{block}
+  \tightgap
+  \begin{block}{〈PI 3 或核心成员学术根基〉}
+    \begin{itemize}
+      \item 〈Key milestone 1〉(Year) → 〈Key milestone 2〉(Year)
+      \item \con{〈One-line significance〉}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{〈Slide Title — 知识谱系汇聚〉}
+  \begin{callout}[〈核心判断：这些路径为何在此交汇〉]
+    〈Why this convergence is not accidental — 1-2 sentences〉
+  \end{callout}
+  \tightgap
+  \begin{itemize}
+    \item \shl{〈Gene 1〉} $\to$ 〈How it manifests in the lab's work〉
+    \item \shl{〈Gene 2〉} $\to$ 〈How it manifests in the lab's work〉
+    \item \shl{〈Gene 3〉} $\to$ 〈How it manifests in the lab's work〉
+  \end{itemize}
+  \tightgap
+  \begin{callout}[〈Synthesis〉]
+    〈One-line thesis on what makes the team unique〉。
+  \end{callout}
+\end{frame}
+
+% ============================ 3. 研究脉络 ============================
+\renewcommand{\secblurb}{〈本节一句话主旨：研究不是孤立的论文，而是多线协同的演化〉}
+\section{研究脉络}
+
+\begin{frame}{〈Slide Title — N 条主线 / N 个阶段〉}
+  \begin{block}{主线一：〈Thread 1 Name〉（〈Paper Count〉 篇）}
+    〈Key papers / timeline〉\hfill \con{核心问题：〈Driving Question〉}
+  \end{block}
+  \tightgap
+  \begin{block}{主线二：〈Thread 2 Name〉（〈Paper Count〉 篇）}
+    〈Key papers / timeline〉\hfill \con{核心问题：〈Driving Question〉}
+  \end{block}
+  \tightgap
+  \begin{block}{主线三：〈Thread 3 Name〉（〈Paper Count〉 项）}
+    〈Key work / systems〉\hfill \con{核心问题：〈Driving Question〉}
+  \end{block}
+\end{frame}
+
+\begin{frame}{〈Slide Title — 主线协同关系〉}
+  \begin{callout}[〈核心判断：这不是独立项目，是一个完整体系〉]
+    〈Thread 1〉提供\shl{〈Capability〉}，〈Thread 2〉让团队\shl{〈Evolution〉}，〈Thread 3〉让产出\shl{〈Impact〉}。三者缺一不可。
+  \end{callout}
+  \tightgap
+  \begin{itemize}
+    \item 〈Discovery A〉 $\to$ 〈Bottleneck identified〉 $\to$ 催生了 〈Solution B〉
+    \item 〈Solution B〉 $\to$ 〈Next step C〉
+    \item 〈Engineering thread connection〉
+  \end{itemize}
+\end{frame}
+
+% ============================ 4. 核心方向一 ============================
+\renewcommand{\secblurb}{〈本节一句话主旨：第一个核心方向的贡献与演变〉}
+\section{核心方向一}
+
+\begin{frame}{〈Slide Title — 代表性工作一〉}
+  \begin{block}{〈Paper Name〉 (〈Venue〉, 〈Year〉) — 〈One-line Description〉}
+    \begin{itemize}
+      \item 〈Key contribution 1〉
+      \item 〈Key contribution 2〉
+      \item \shl{〈Core claim/proposition〉}
+    \end{itemize}
+  \end{block}
+  \tightgap
+  \begin{block}{〈Paper Name 2〉 (〈Venue〉, 〈Year〉) — 〈One-line Description〉}
+    \begin{itemize}
+      \item 〈Key contribution 1〉
+      \item 〈Key contribution 2〉
+      \item \con{〈Design philosophy note〉}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+% 可选：论文架构图独立帧
+% \begin{frame}[plain,c]
+%   \centering
+%   \includegraphics[height=0.85\textheight,width=\textwidth,keepaspectratio]{paper1_arch.png}
+%   \figcap{}{〈图注〉}
+% \end{frame}
+
+\begin{frame}{〈Slide Title — 关键指标〉}
+  \begin{itemize}
+    \item 〈Key finding 1〉
+    \item 〈Key finding 2〉
+    \item \shl{〈Core takeaway〉}
+  \end{itemize}
+  \tightgap
+  \centering
+  \metric{〈Value〉}{〈Label〉}\hfill
+  \metric{〈Value〉}{〈Label〉}\hfill
+  \metric{〈Value〉}{〈Label〉}
+\end{frame}
+
+\begin{frame}{〈Slide Title — 代表性工作三〉}
+  \begin{block}{〈Paper Name 3〉 (〈Venue〉, 〈Year〉) — 〈One-line Description〉}
+    \begin{itemize}
+      \item 〈Key contribution 1〉
+      \item 〈Key contribution 2〉
+      \item \shl{〈Core claim〉}
+    \end{itemize}
+  \end{block}
+  \tightgap
+  \begin{block}{〈Paper Name 4〉 (〈Venue〉, 〈Year〉) — 〈One-line Description〉}
+    \begin{itemize}
+      \item 〈Key contribution 1〉
+      \item \con{〈Design philosophy〉}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+% ============================ 5. 核心方向二 ============================
+\renewcommand{\secblurb}{〈本节一句话主旨：第二个核心方向的贡献与突破〉}
+\section{核心方向二}
+
+\begin{frame}{〈Slide Title — 核心范式 / 方法论〉}
+  \begin{callout}[核心范式转变]
+    〈Old paradigm〉 → 〈New paradigm〉
+  \end{callout}
+  \tightgap
+  \begin{block}{〈Method Name〉 = 〈Acronym Expansion〉}
+    \begin{enumerate}
+      \item \shl{〈Step 1〉}：〈Description〉
+      \item \shl{〈Step 2〉}：〈Description〉
+      \item \shl{〈Step 3〉}：〈Description〉
+      \item \shl{〈Step 4〉}：〈Description〉
+      \item \shl{〈Step 5〉}：〈Description〉
+    \end{enumerate}
+  \end{block}
+\end{frame}
+
+\begin{frame}{〈Slide Title — 工程化 / 落地〉}
+  \begin{block}{〈System / Paper Name〉 (〈Venue〉, 〈Year〉) — 〈One-line Description〉}
+    \begin{itemize}
+      \item \shl{〈Key design choice〉}：〈Explanation〉
+      \item 〈Key result / metric〉
+      \item \shl{〈Design philosophy〉}
+    \end{itemize}
+  \end{block}
+  \tightgap
+  \begin{block}{〈Relation to previous work〉}
+    \begin{itemize}
+      \item 〈Paper A〉是方法论框架（〈What it provides〉）
+      \item 〈Paper B〉是工程实现（〈What it provides〉）
+      \item \con{〈How B builds on A〉}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+% ============================ 6. 核心方向三 ============================
+\renewcommand{\secblurb}{〈本节一句话主旨：第三个核心方向的贡献与影响〉}
+\section{核心方向三}
+
+\begin{frame}{〈Slide Title — 代表性工作汇总〉}
+  \begin{block}{〈Paper 1〉 (〈Venue〉, 〈Year〉)}
+    \begin{itemize}
+      \item 〈Key contribution〉
+      \item \shl{〈Core claim〉}
+    \end{itemize}
+  \end{block}
+  \tightgap
+  \begin{block}{〈Paper 2〉 (〈Venue〉, 〈Year〉)}
+    \begin{itemize}
+      \item 〈Key contribution〉
+      \item \shl{〈Core claim〉}
+    \end{itemize}
+  \end{block}
+  \tightgap
+  \begin{block}{〈Paper 3〉 (〈Venue〉, 〈Year〉)}
+    \begin{itemize}
+      \item 〈Key contribution〉
+      \item \shl{〈Core claim〉}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{〈Slide Title — 关键指标〉}
+  \begin{itemize}
+    \item 〈Key finding 1〉
+    \item 〈Key finding 2〉
+    \item \shl{〈Core takeaway〉}
+  \end{itemize}
+  \tightgap
+  \centering
+  \metric{〈Value〉}{〈Label〉}\hfill
+  \metric{〈Value〉}{〈Label〉}\hfill
+  \metric{〈Value〉}{〈Label〉}
+\end{frame}
+
+% ============================ 7. 方法论总结 ============================
+\renewcommand{\secblurb}{〈本节一句话主旨：从整个研究体系中提炼出的方法论启示〉}
+\section{方法论总结}
+
+\begin{frame}{〈Slide Title — N 层结构分析〉}
+  \begin{block}{第一层：〈Layer 1 Name〉（〈阶段性论文范围〉）}
+    〈Capability description〉\hfill \con{〈Significance — 这是共同起点还是差异点〉}
+  \end{block}
+  \tightgap
+  \begin{block}{第二层：〈Layer 2 Name〉（〈阶段性论文范围〉）}
+    〈Capability description〉\hfill \con{〈Significance — 这里开始产生分化〉}
+  \end{block}
+  \tightgap
+  \begin{block}{第三层：〈Layer 3 Name〉（〈阶段性论文范围〉+）}
+    〈Capability description〉\hfill \shl{〈Significance — 追赶者面临的不是技术差距〉}
+  \end{block}
+  \tightgap
+  \begin{callout}[一以贯之：〈Core Philosophy〉]
+    〈One-line thesis that runs through all work〉。
+  \end{callout}
+\end{frame}
+
+\begin{frame}{〈Slide Title — 核心启示〉}
+  \begin{block}{启示一：〈Theme 1〉}
+    〈Detailed insight — 2-3 sentences with evidence〉。\con{〈Key implication〉}。
+  \end{block}
+  \tightgap
+  \begin{block}{启示二：〈Theme 2〉}
+    〈Detailed insight — 2-3 sentences with evidence〉。\con{〈Key implication〉}。
+  \end{block}
+  \tightgap
+  \begin{block}{启示三：〈Theme 3〉}
+    〈Detailed insight — 2-3 sentences with evidence〉。\con{〈Key implication〉}。
+  \end{block}
+\end{frame}
+
+% ============================ 8. 护城河与定位 ============================
+\renewcommand{\secblurb}{〈本节一句话主旨：为什么该团队的领先地位是可持续的〉}
+\section{护城河与定位}
+
+\begin{frame}{〈Slide Title — 竞争格局〉}
+  \begin{block}{竞争格局}
+    \begin{itemize}
+      \item \shl{〈Competitor 1〉}：〈Positioning / advantage / weakness〉
+      \item \shl{〈Competitor 2〉}：〈Positioning / advantage / weakness〉
+      \item \shl{〈Competitor 3〉}：〈Positioning / advantage / weakness〉
+      \item \shl{〈Competitor 4〉}：〈Positioning / advantage / weakness〉
+    \end{itemize}
+  \end{block}
+  \tightgap
+  \begin{block}{〈Lab Name〉的结构性优势}
+    \begin{enumerate}
+      \item \shl{〈Advantage 1〉}：〈Explanation〉
+      \item \shl{〈Advantage 2〉}：〈Explanation〉
+      \item \shl{〈Advantage 3〉}：〈Explanation〉
+    \end{enumerate}
+  \end{block}
+\end{frame}
+
+\begin{frame}{〈Slide Title — 开放问题〉}
+  \begin{callout}[〈Retrospective / Big Picture〉]
+    〈One-line synthesis of what the lab has proven over its trajectory〉。
+  \end{callout}
+  \tightgap
+  \begin{block}{〈N 个开放问题〉}
+    \begin{itemize}
+      \item \shl{〈Question 1〉}：〈Elaboration〉
+      \item \shl{〈Question 2〉}：〈Elaboration〉
+      \item \shl{〈Question 3〉}：〈Elaboration〉
+      \item \shl{〈Question 4〉}：〈Elaboration〉
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+% ============================ 9. 可视化分析 ============================
+\renewcommand{\secblurb}{〈本节一句话主旨：用数据可视化呈现研究产出与主题演化〉}
+\section{可视化分析}
+
+\begin{frame}{论文发表年份与主题分布}
+  \phfig
+  \begin{callout}[说明]
+    \ph{论文发表年份与主题分布堆叠柱状图（2013--2026）}。
+    \con{准备好图片后，将本帧替换为 [plain,c] 全幅帧。}\\
+    \con{图片文件：figures/pub\_timeline\_stacked.png}
+  \end{callout}
+\end{frame}
+
+\begin{frame}{论文词云可视化}
+  \phfig
+  \begin{callout}[说明]
+    \ph{核心论文词云可视化（基于标题与摘要）}。
+    \con{准备好图片后，将本帧替换为 [plain,c] 全幅帧。}\\
+    \con{图片文件：figures/wordcloud.png}
+  \end{callout}
+\end{frame}
+
+\begin{frame}{关键词与主题迁移分析}
+  \begin{block}{词频分布}
+    \begin{itemize}
+      \item \shl{〈Thread 1 关键词〉}：〈Representative terms〉
+      \item \shl{〈Thread 2 关键词〉}：〈Representative terms〉
+      \item \shl{〈Thread 3 关键词〉}：〈Representative terms〉
+    \end{itemize}
+  \end{block}
+  \tightgap
+  \begin{callout}[核心发现]
+    〈How the vocabulary shift across phases reflects research evolution〉。
+  \end{callout}
+\end{frame}
+
+% ============================ Q&A ============================
+\begin{frame}[plain,c]
+  \centering
+  {\fontsize{40}{44}\selectfont\bfseries\color{emph} Q\,\&\,A}
+
+  \deckgap
+  {\Large 谢谢！欢迎提问}
+
+  \deckgap
+  {\color{sustechgrey}\footnotesize \titlemetaline}
+\end{frame}
+
+% ============================ 附录 / Appendix ============================
+\appendix
+
+\begin{frame}[plain,c]
+  \centering
+  {\color{sustechgrey}\large Appendix}\\[0.6em]
+  {\Huge\bfseries 附录 / Appendix}\\[0.9em]
+  {\color{emph}\rule{2cm}{2pt}}
+\end{frame}
+
+\begin{frame}{附录 A —— 课题组在业界地位分析}
+  \begin{block}{学术定位}
+    \begin{itemize}
+      \item \shl{〈Lab Name〉} 在〈Field〉领域的地位：〈Positioning〉
+      \item 与竞争实验室对比：〈Competitor 1〉, 〈Competitor 2〉, 〈Competitor 3〉
+      \item 资金来源：〈Funding sources — NSF, DARPA, industry, etc.〉
+    \end{itemize}
+  \end{block}
+  \tightgap
+  \begin{block}{业界影响力}
+    \begin{itemize}
+      \item 产出的初创公司 / 技术转移：〈Spinoffs〉
+      \item 核心差异化：\shl{〈Unique differentiator〉}
+      \item 业界合作：〈Industry partners〉
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{附录 B —— 课题组最新博客/访谈内容解读}
+  \begin{block}{〈Source 1 — Interview / Blog / Talk Title〉}
+    \begin{itemize}
+      \item \shl{"〈Key quote or thesis statement〉"}
+      \item \con{〈Commentary / interpretation in context〉}
+    \end{itemize}
+  \end{block}
+  \tightgap
+  \begin{block}{〈Source 2 — Interview / Blog / Talk Title〉}
+    \begin{itemize}
+      \item \shl{"〈Key quote or thesis statement〉"}
+      \item \con{〈Commentary / interpretation in context〉}
+    \end{itemize}
+  \end{block}
+  \tightgap
+  \begin{block}{〈Source 3 — Interview / Blog / Talk Title〉}
+    \begin{itemize}
+      \item \shl{"〈Key quote or thesis statement〉"}
+      \item \con{〈Commentary / interpretation in context〉}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{附录 C —— 核心论文发表时间线}
+  \centering
+  \renewcommand{\arraystretch}{1.15}
+  \footnotesize
+  \begin{tabular}{ccccr}
+    \toprule
+    \theadrow \thc{年份} & \thc{会议/期刊} & \thc{论文简称} & \thc{研究方向} & \thc{引用}\\
+    \midrule
+    〈2013〉 & 〈ICML〉  & 〈GPS〉         & 〈RL Theory〉        & 〈5000+〉\\
+    \altrow 〈2018〉 & 〈ICML〉  & 〈SAC〉         & 〈RL Theory〉        & 〈8000+〉\\
+    〈2020〉 & 〈NeurIPS〉& 〈CQL〉         & 〈Offline RL〉       & 〈3000+〉\\
+    \altrow 〈2020〉 & 〈CoRL〉  & 〈AWAC〉        & 〈Offline RL〉       & 〈1000+〉\\
+    〈2022〉 & 〈arXiv〉 & 〈RT-1〉        & 〈Foundation Model〉 & 〈2000+〉\\
+    \altrow 〈2023〉 & 〈arXiv〉 & 〈RT-2〉        & 〈Foundation Model〉 & 〈1500+〉\\
+    \midrule
+    \theadrow \thc{···} & \thc{···} & \thc{···} & \thc{···} & \thc{···}\\
+    \bottomrule
+  \end{tabular}
+  \deckgap
+  \begin{callout}[说明]
+    \con{完整论文列表见实验室官网 / Google Scholar。仅收录代表性工作。}
+  \end{callout}
+\end{frame}
+
+\begin{frame}{附录 D —— 实验室成员与合作网络}
+  \begin{block}{核心成员}
+    \begin{itemize}
+      \item \shl{〈PI 1〉}：〈Position〉, 代表性工作：〈Notable work〉
+      \item \shl{〈PI 2〉}：〈Position〉, 代表性工作：〈Notable work〉
+      \item \shl{〈Key Member 3〉}：〈Role〉, 代表性工作：〈Notable work〉
+    \end{itemize}
+  \end{block}
+  \tightgap
+  \begin{block}{主要合作者与机构}
+    \begin{itemize}
+      \item \shl{〈Collaborator 1〉}（〈Institution〉）— 〈Collaboration scope〉
+      \item \shl{〈Collaborator 2〉}（〈Institution〉）— 〈Collaboration scope〉
+      \item \shl{〈Collaborator 3〉}（〈Institution〉）— 〈Collaboration scope〉
+    \end{itemize}
+  \end{block}
+  \tightgap
+  \begin{callout}[人才输出]
+    〈Notable alumni and where they are now〉。
+  \end{callout}
+\end{frame}
+
+\end{document}
