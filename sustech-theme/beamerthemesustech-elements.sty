@@ -79,7 +79,13 @@
 % 在每个 \section 之前用 \renewcommand{\secblurb}{...} 设置本节主旨。
 \newcommand{\secblurb}{}
 % 可视化分析节（\vizbgon 触发）标题页文字放入白色面板，保证在拼贴背景上可读；
-% 其余分节页保持原始样式。\ifvizbgdiv 必须在 frame 环境之外（帧体收集器限制）。
+% 其余分节页保持原始样式。条件由主题自带声明（默认关闭），文档中用
+% \vizbgon / \vizbgoff 切换；切换必须在 frame 环境之外（帧体收集器限制）。
+% \newif 兼容旧文档中残留的 \newif\ifvizbgdiv 声明（重复声明无害）。
+\newif\ifvizbgdiv
+\vizbgdivfalse
+\newcommand{\vizbgon}{\vizbgdivtrue}
+\newcommand{\vizbgoff}{\vizbgdivfalse}
 \setbeamercolor{vizdivbox}{bg=white!85!black}
 \AtBeginSection[]{%
   \ifvizbgdiv
