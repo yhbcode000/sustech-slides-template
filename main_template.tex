@@ -29,13 +29,9 @@
 \documentclass[aspectratio=1610,10pt]{ctexbeamer}
 
 \usetheme{sustech}        % Madrid 基础 + 学术配色 + 排版宏（见 sustech-theme/）
-
-% 可视化分析分节页（\vizbgon 触发）依赖的条件声明；论文分享默认关闭：
-\newif\ifvizbgdiv
-\vizbgdivfalse
+% 可视化分析分节页默认关闭；需要时在导言区调用 \vizbgon 开启（\vizbgoff 关闭）。
 
 \usepackage{amssymb}
-\usepackage{tikz}
 \graphicspath{{figures/}}
 
 % --- 占位辅助（仅模板用；真实稿件可删除）------------------------------------

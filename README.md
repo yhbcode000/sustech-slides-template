@@ -185,16 +185,20 @@ git clone https://github.com/yhbcode000/sustech-slides-template.git
 latexmk -xelatex main.tex
 ```
 
-最小化导言区：
+最小化导言区（标题页字段语义：`\author` 放论文作者，汇报人/地点用 `\setpresenter`/`\setvenue`）：
 
 ```latex
 \documentclass[aspectratio=1610,10pt]{ctexbeamer}  % 比例见下方“幻灯片比例”一节
 \usetheme{sustech}
 \title[短标题]{中文主标题}
 \subtitle{English subtitle}
-\author[汇报人]{汇报人姓名}
-\institute[机构]{机构 · 会议/期刊}
-\date{YYYY-MM-DD · 地点}
+\author[一作 et al.]{论文全部作者（按论文署名顺序）}
+\institute[机构]{团队所属单位}
+\setsource{会议 / 期刊}{年份}                    % 论文来源（可选）
+\setdomains{\domaintag{领域1}\domaintag{领域2}}  % 领域标签（可选）
+\setpresenter{汇报人}
+\setvenue{地点}
+\date{YYYY-MM-DD}
 \begin{document}
 % ... frames ...
 \end{document}
@@ -261,6 +265,12 @@ latexmk -xelatex main.tex
 | `\theadrow` / `\altrow` / `\thc{...}` | 📋 表头行 / 交替行 / 表头单元 |
 | `\zonetext` `\zonefig` `\zonehalf` | 📐 列宽 (0.55 / 0.42 / 0.48) |
 | `\tightgap` / `\deckgap` | ↔️ 统一垂直间距 |
+| `\twopane{左}{右}` | 🔀 双栏分屏（约 1:2 + 竖分隔线，目录页常用） |
+| `\tocdense` | 📑 紧凑目录（须在分组内用：`{\tocdense\tableofcontents}`） |
+| `\setsource{期刊/会议}{年份}` | 📌 标题页"论文来源"行（可选） |
+| `\setdomains{...}` / `\domaintag{...}` | 🏷️ 标题页领域标签（可选） |
+| `\setpresenter{...}` / `\setvenue{...}` | 👤 标题页底部"汇报人 · 地点 · 时间"信息行 |
+| `\vizbgon` / `\vizbgoff` | 🖼️ 分节页白色面板样式开/关（默认关；帧外调用） |
 
 ### 📑 章节分隔页带一句话摘要
 
